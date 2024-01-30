@@ -25,3 +25,6 @@ def convert_to_grayscale(dataset_path):
 datasets_path = "./datasets"
 train_dataset_path = f"{datasets_path}/train"
 val_dataset_path = f"{datasets_path}/valid"
+
+convert_to_grayscale(train_dataset_path)
+convert_to_grayscale(val_dataset_path)
