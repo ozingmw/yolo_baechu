@@ -1,30 +1,23 @@
-from PIL import Image
-import os
+from glob import glob
+import utils
 import shutil
 
-def convert_to_grayscale(dataset_path):
-    images_folder = os.path.join(dataset_path, "images")
-    labels_folder = os.path.join(dataset_path, "labels")
-
-    for filename in os.listdir(images_folder):
-        if filename.endswith(".jpeg"):
-            image_path = os.path.join(images_folder, filename)
-            image = Image.open(image_path).convert("L")
-            gray_filename = "gray_" + filename
-            gray_image_path = os.path.join(images_folder, gray_filename)
-            image.save(gray_image_path)
-
-    for filename in os.listdir(labels_folder):
-        if filename.endswith(".txt"):
-            label_path = os.path.join(labels_folder, filename)
-            gray_label_filename = "gray_" + filename
-            gray_label_path = os.path.join(labels_folder, gray_label_filename)
-            shutil.copy(label_path, gray_label_path)
-
+shutil.rmtree('./datasets', ignore_errors=True)
+shutil.copytree('./baechu_dataset', './datasets')
 
 datasets_path = "./datasets"
 train_dataset_path = f"{datasets_path}/train"
 val_dataset_path = f"{datasets_path}/valid"
 
-convert_to_grayscale(train_dataset_path)
-convert_to_grayscale(val_dataset_path)
+data_aug_count = 32
+
+utils.convert_to_grayscale(train_dataset_path)
+utils.convert_to_grayscale(val_dataset_path)
+
+train_images_path_list = [train_dataset for train_dataset in glob(f'{train_dataset_path}/images/*')]
+for train_image in train_images_path_list:
+    utils.augment_image(train_image, data_aug_count)
+    
+val_images_path_list = [val_dataset for val_dataset in glob(f'{val_dataset_path}/images/*')]
+for val_image in val_images_path_list:
+    utils.augment_image(val_image, data_aug_count)
