@@ -81,15 +81,29 @@ def augment_image(image_path, data_aug_count):
     )
 
     seq = iaa.Sequential([
-        iaa.Rot90((1,3)),
+        iaa.CropAndPad(
+            percent=(0, 0.2),
+            pad_mode=["constant", "edge"],
+            pad_cval=(0, 128)
+        )
+    ])
+
+    seq = iaa.Sequential([
+        iaa.Multiply((0.7, 1.3)),
+        iaa.Rot90([1,3]),
         iaa.Sometimes(
             0.5,
             iaa.GaussianBlur(sigma=(0, 0.5))
         ),
-        iaa.Fliplr(0.5),
-        iaa.Flipud(0.5),
+        iaa.CropAndPad(
+            percent=(0, 0.2),
+            pad_mode=["constant", "edge"],
+            pad_cval=(0, 128)
+        ),
+        iaa.Fliplr(0.3),
+        iaa.Flipud(0.3),
         iaa.Dropout(p=(0, 0.1)),
-        iaa.AdditiveGaussianNoise(loc=0, scale=(0.0, 0.05*255), per_channel=0.5),
+        iaa.AdditiveGaussianNoise(scale=(0.0, 0.05*255)),
     ])
 
     images = np.array([image for _ in range(data_aug_count)], dtype=np.uint8)
