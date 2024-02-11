@@ -1,0 +1,13 @@
+accelerate launch sd_lora/train_text_to_image_lora_sdxl.py \
+  --pretrained_model_name_or_path="stabilityai/stable-diffusion-xl-base-1.0" \
+  --train_data_dir="./datasets_lora/" \
+  --output_dir="sd_lora/models/rate_5e-6" \
+  --caption_column="text" \
+  --resolution=512 \
+  --train_batch_size=1 \
+  --gradient_accumulation_steps=1 \
+  --learning_rate=5e-6 \
+  --lr_scheduler="constant" \
+  --lr_warmup_steps=0 \
+  --max_train_steps=1600 \
+  --checkpointing_steps=100
