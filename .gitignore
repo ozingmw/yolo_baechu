@@ -1,9 +1,8 @@
-datasets/
+*datasets*
 labelImg/
 runs/
 models/
 __pycache__/
-baechu_dataset/
 
 yolov8n.pt
 .DS_Store

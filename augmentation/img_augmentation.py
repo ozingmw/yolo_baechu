@@ -3,7 +3,7 @@ import utils
 import shutil
 
 shutil.rmtree('./datasets', ignore_errors=True)
-shutil.copytree('./baechu_dataset', './datasets')
+shutil.copytree('./baechu_datasets', './datasets')
 
 datasets_path = "./datasets"
 train_dataset_path = f"{datasets_path}/train"
