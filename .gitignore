@@ -1,5 +1,6 @@
 *datasets*
 labelImg/
+X-AnyLabeling/
 runs/
 models/
 __pycache__/
